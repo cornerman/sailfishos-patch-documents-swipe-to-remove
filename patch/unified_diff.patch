@@ -1,0 +1,81 @@
+diff --git a/usr/share/sailfish-office/FileListPage.qml b/usr/share/sailfish-office/FileListPage.qml
+index ca1f94b..c9bcfea 100644
+--- a/usr/share/sailfish-office/FileListPage.qml
++++ b/usr/share/sailfish-office/FileListPage.qml
+@@ -174,19 +174,66 @@ Page {
+             ListView.onAdd: AddAnimation { target: listItem; }
+             ListView.onRemove: RemoveAnimation { target: listItem; }
+ 
+-            menu: Component {
+-                ContextMenu {
+-                    id: contextMenu;
+-                    MenuItem {
+-                        //: Delete a file from the device
+-                        //% "Delete"
+-                        text: qsTrId("sailfish-office-me-delete");
+-                        onClicked: {
+-                            listItem.deleteFile();
+-                        }
++            drag.target: listItem
++            drag.axis: Drag.XAxis
++            drag.minimumX: 0
++            drag.maximumX: width
++
++            drag.onActiveChanged: {
++                if (!drag.active) {
++                    if (x > width / 3) {
++                        state = "removing"
++                    } else {
++                        state = "default"
+                     }
+                 }
+             }
++
++            state: "default"
++
++            states: [
++                State {
++                    name: "default"
++                },
++                State {
++                    name: "dragging"
++                    when: drag.active
++                },
++                State {
++                    name: "removing"
++                }
++            ]
++
++            transitions: [
++                Transition {
++                    from: "dragging"
++                    to: "default"
++                    NumberAnimation {
++                        target: listItem
++                        properties: "x"
++                        to: 0
++                        duration: 200
++                    }
++                },
++                Transition {
++                    from: "dragging"
++                    to: "removing"
++                    SequentialAnimation {
++                        NumberAnimation {
++                            target: listItem
++                            properties: "x"
++                            to: width
++                            duration: 200
++                        }
++                        ScriptAction {
++                            script: {
++                                listItem.deleteFile()
++                                x = 0
++                            }
++                        }
++                    }
++                }
++            ]
+         }
+ 
+         VerticalScrollDecorator { }

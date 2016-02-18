@@ -1,0 +1,8 @@
+{
+    "name": "Documents swipe to remove",
+    "description": "Swipe right to remove a file in the Documents list view of sailfish-office",
+    "category": "others",
+    "infos": {
+        "maintainer": "cornerman"
+    }
+}
