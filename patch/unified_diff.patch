@@ -1,20 +1,20 @@
 diff --git a/usr/share/sailfish-office/FileListPage.qml b/usr/share/sailfish-office/FileListPage.qml
-index ca1f94b..c9bcfea 100644
+index a08976f..ae0e98e 100644
 --- a/usr/share/sailfish-office/FileListPage.qml
 +++ b/usr/share/sailfish-office/FileListPage.qml
-@@ -174,19 +174,66 @@ Page {
-             ListView.onAdd: AddAnimation { target: listItem; }
-             ListView.onRemove: RemoveAnimation { target: listItem; }
+@@ -234,19 +234,66 @@ Page {
+             //ListView.onAdd: AddAnimation { target: listItem }
+             //ListView.onRemove: RemoveAnimation { target: listItem }
  
 -            menu: Component {
 -                ContextMenu {
--                    id: contextMenu;
+-                    id: contextMenu
 -                    MenuItem {
 -                        //: Delete a file from the device
 -                        //% "Delete"
--                        text: qsTrId("sailfish-office-me-delete");
+-                        text: qsTrId("sailfish-office-me-delete")
 -                        onClicked: {
--                            listItem.deleteFile();
+-                            listItem.deleteFile()
 -                        }
 +            drag.target: listItem
 +            drag.axis: Drag.XAxis
